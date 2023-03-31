@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<!-- 这个是配置全局项目日志，上线初期阶段：为了看系统运行状况Threshold设置info或debug，当系统运行一段时间后，稳定了Threshold设置warn或error，提高日志级别，减少日志输出量 -->
+	<!-- name:项目名称 -->
+	<appender name="debug"
+		class="com.liepin.swift.framework.log.log4j.SwiftDailyRollingFileAppender">
+		<!-- File: 日志文件存放路径 -->
+		<param name="File" value="debug/debug.log" />
+		<!-- Append: 追加模式 -->
+		<param name="Append" value="true" />
+		<!-- Threshold: 打印日志级别 debug、info、warn、error -->
+		<param name="Threshold" value="info" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd-HH" />
+		<param name="encoding" value="UTF-8" />
+		<!-- DatePattern: 日志分割 错误日志以小时来分割 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %p [%t] %c | %m%n" />
+		</layout>
+	</appender>
+
+	<!-- 这个是配置全局项目事件日志 -->
+	<appender name="eventinfo"
+		class="com.liepin.swift.framework.log.log4j.SwiftDailyRollingFileAppender">
+		<!-- File: 日志文件存放路径 -->
+		<param name="File" value="eventinfo/eventInfo.log" />
+		<param name="Append" value="true" />
+		<!-- Threshold设置为info级别 -->
+		<param name="Threshold" value="info" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd-HH" />
+		<param name="encoding" value="UTF-8" />
+		<!-- DatePattern: 日志分割 事件日志以小时来分割 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %p [%t] %c | %m%n" />
+		</layout>
+	</appender>
+
+	<!-- 这个是配置mysql.log事件日志 -->
+	<appender name="sqlLogger"
+		class="com.liepin.swift.framework.log.log4j.SwiftDailyRollingFileAppender">
+		<!-- File: 日志文件存放路径 -->
+		<param name="File" value="sql/sql/sql.log" />
+		<param name="Append" value="true" />
+		<!-- Threshold设置为info级别 -->
+		<param name="Threshold" value="info" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd-HH" />
+		<param name="encoding" value="UTF-8" />
+		<!-- DatePattern: 日志分割 事件日志以小时来分割 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %p [%t] %c | %m%n" />
+		</layout>
+	</appender>
+
+	<!-- 这个是配置slowquery.log事件日志 -->
+	<appender name="slowQueryLogger"
+		class="com.liepin.swift.framework.log.log4j.SwiftDailyRollingFileAppender">
+		<!-- File: 日志文件存放路径 -->
+		<param name="File" value="sql/slowquery.log" />
+		<param name="Append" value="true" />
+		<!-- Threshold设置为info级别 -->
+		<param name="Threshold" value="info" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd-HH" />
+		<param name="encoding" value="UTF-8" />
+		<!-- DatePattern: 日志分割 事件日志以小时来分割 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %p [%t] %c | %m%n" />
+		</layout>
+	</appender>
+
+	<!-- 这个是配置change.log事件日志 -->
+	<appender name="changeLogger"
+		class="com.liepin.swift.framework.log.log4j.SwiftDailyRollingFileAppender">
+		<!-- File: 日志文件存放路径 -->
+		<param name="File" value="sql/change/change.log" />
+		<param name="Append" value="true" />
+		<!-- Threshold设置为info级别 -->
+		<param name="Threshold" value="info" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd-HH" />
+		<param name="encoding" value="UTF-8" />
+		<!-- DatePattern: 日志分割 事件日志以小时来分割 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %p [%t] %c | %m%n" />
+		</layout>
+	</appender>
+
+	<!-- 根据运行环境可变成ConsoleAppender模式的 -->
+	<appender name="CONSOLE"
+		class="com.liepin.swift.framework.log.log4j.TomcatConsoleVariableDailyRollingFileAppender">
+		<!-- File: 日志文件存放路径 -->
+		<param name="File" value="catalina#{DatePattern}.out" />
+		<param name="Append" value="true" />
+		<!-- Threshold设置为info级别 -->
+		<param name="Threshold" value="warn" />
+		<param name="DatePattern" value="'.'MM-dd" />
+		<param name="encoding" value="UTF-8" />
+		<!-- DatePattern: 日志分割 事件日志以小时来分割 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %4p [%t] (%F:%L) - %m%n" />
+		</layout>
+	</appender>
+	
+<!-- 	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<param name="Threshold" value="warn" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MM-dd HH:mm:ss:SSS} %4p [%t] (%F:%L) - %m%n" />
+		</layout>
+	</appender> -->
+
+	<!-- 设置自己项目日志打印级别 -->
+
+	<category name="com.liepin.dao.sql.SqlLogger">
+		<priority value="info" />
+		<appender-ref ref="sqlLogger" />
+	</category>
+
+	<category name="com.liepin.dao.sql.SlowQueryLogger">
+		<priority value="info" />
+		<appender-ref ref="slowQueryLogger" />
+	</category>
+
+	<category name="com.liepin.dao.sql.statistics.BILogger">
+		<priority value="info" />
+		<appender-ref ref="changeLogger" />
+	</category>
+
+	<category name="com.liepin">
+		<!-- debug、info、warn、error -->
+		<priority value="warn" />
+	</category>
+
+	<!-- 过滤掉不希望打印的第三方jar的日志 -->
+	<!-- 例如: spring -->
+
+	<category name="org.apache.ibatis">
+		<priority value="WARN" />
+	</category>
+	<category name="org.apache">
+		<priority value="WARN" />
+	</category>
+	<category name="org.mybatis">
+		<priority value="WARN" />
+	</category>
+	<category name="java.sql">
+		<priority value="WARN" />
+	</category>
+
+	<category name="org.springframework">
+		<priority value="WARN" />
+	</category>
+
+	<!-- 设置自己项目事件日志 -->
+	<category name="com.liepin.swift.framework.mvc.eventInfo.AbstractIOLogger">
+		<priority value="info" />
+		<appender-ref ref="eventinfo" />
+	</category>
+
+	<!-- 设置用户日志 -->
+	<category name="com.liepin.swift.core.log.MonitorLogger">
+		<priority value="info" />
+		<appender-ref ref="debug" />
+	</category>
+
+
+	<!-- root包括设置的appender -->
+	<root>
+		<appender-ref ref="CONSOLE" />
+	</root>
+
+</log4j:configuration>
